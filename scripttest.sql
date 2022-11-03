@@ -1,9 +1,9 @@
 -- test
 
 -----------------------------------------------------------
-/*tem que explicar no comentário sobre a criação do usuário,
- *do banco de dados uvv e do schema. */
-
+/*tem que explicar no comentário sobre a criação do usuário 
+"dono" do banco de dados uvv, e sobre a criação do schema. */
+create database uvv;
 create schema hr;
 
 ---------- Mostra qual é o atual SEARCH PATH --------------
