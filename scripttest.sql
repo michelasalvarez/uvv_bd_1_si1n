@@ -58,7 +58,7 @@ create table hr.localizacoes (
 	uf varchar(20),
 	id_pais char(2) 
 );
---Aplicando a foreign key no campo "id_pais"
+--Aplicando a foreign key da tabela localizacoes"
 alter table hr.localizacoes 
 	add constraint fk_localizacao
 	foreign key (id_pais)
@@ -66,4 +66,16 @@ alter table hr.localizacoes
 ;
 
 
-create table 
+create table hr.departamentos (
+	id_departamento int not null primary key,
+	nome varchar(50) unique,
+	id_localizacao int, 
+	id_gerente int not null -------------------------------------------to em duvida se ele é FK, quero criar outra tabela para os gerentes
+);
+
+--Aplicando a foreign key da tabela departamentos"
+alter table hr.localizacoes 
+	add constraint fk_localizacao ----nao fiz ainda essa table
+	foreign key (id_pais)
+	references hr.paises (id_pais)
+;
