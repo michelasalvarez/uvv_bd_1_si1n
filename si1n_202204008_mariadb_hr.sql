@@ -1,12 +1,10 @@
-/*Esse começo do script promove uma limpeza no banco de dados, 
- * faz uma remoção, caso existam, do BD "uvv" e do usuário
- *"michela", para então criar o usuário "Postgres" e o 
- *Banco de Dados "UVV"*/
-
-
+/*Esse começo do script MARIADB promove uma limpeza no banco de dados, *
+ * faz uma remoção, caso existam, do BD "uvv" e do usuário             *
+ *"michela", para então criar o usuário "Postgres" e o                 *     
+ *Banco de Dados "UVV"                                                 */
 
 -- deletando o banco de dados UVV
-drop database if exists uvv;
+drop database if exists uvv; 
 
 -- deletando o usuário michela
 drop user if exists michela;
@@ -20,8 +18,8 @@ create database uvv;
 grant all privileges on uvv.* to 'michela';
 flush privileges;
 
+-- usando o banco de dados uvv
 use uvv;
-
 
 /*----------------------------------------------------------
  *                                                          /
@@ -118,11 +116,12 @@ create table empregados (
  * data_incial, data_final, id_cargo (FK), id_departamento(FK)
 -----------------------------------------------------------*/
 create table historico_cargos (
-	id_empregado int not null primary key, 
+	id_empregado int not null, 
 	data_inicial date not null,
 	data_final date not null,
 	id_cargo varchar(10) not null, 
 	id_departamento int,
+	primary key (id_empregado, data_inicial)
 );
 
 -- Relacionando a tabela "paises" com a tabela "regiões" 
@@ -161,10 +160,10 @@ alter table empregados
 ;
 
 -- Relacionando o campo "id_supervisor" com o campo "id_empregado", ambos da tabela "empregados" 
-alter table hr.empregados  
+alter table empregados  
 	add constraint fk_supervisor
 	foreign key (id_supervisor)
-	references hr.empregados (id_empregado)
+	references empregados (id_empregado)
 ;
 
 -- Relacionando a tabela "empregados" com "cargos" 
@@ -183,14 +182,14 @@ alter table historico_cargos
 
 -- Relacionando a tabela "historico_cargos" com a tabela "cargos" 
 alter table historico_cargos   
-	add constraint fk_cargo
+	add constraint fk_cargo_historico
 	foreign key (id_cargo)
 	references cargos (id_cargo)
 ;
 
 -- Relacionando a tabela "historico_cargos" com a tabela "departamentos" 
 alter table historico_cargos   
-	add constraint fk_departamento
+	add constraint fk_departamento_historico
 	foreign key (id_departamento)
 	references departamentos (id_departamento)
 ;
@@ -230,58 +229,57 @@ Insert into paises (id_pais, nome, id_regiao) values ('US','United States of Ame
 Insert into paises (id_pais, nome, id_regiao) values ('ZM','Zambia',4);
 Insert into paises (id_pais, nome, id_regiao) values ('ZW','Zimbabwe',4);
 
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1000,'1297 Via Cola di Rie','00989','Roma',null,'IT');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1100,'93091 Calle della Testa','10934','Venice',null,'IT');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1200,'2017 Shinjuku-ku','1689','Tokyo','Tokyo Prefecture','JP');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1300,'9450 Kamiya-cho','6823','Hiroshima',null,'JP');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1400,'2014 Jabberwocky Rd','26192','Southlake','Texas','US');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1500,'2011 Interiors Blvd','99236','South San Francisco','California','US');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1600,'2007 Zagora St','50090','South Brunswick','New Jersey','US');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1700,'2004 Charade Rd','98199','Seattle','Washington','US');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1800,'147 Spadina Ave','M5V 2L7','Toronto','Ontario','CA');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (1900,'6092 Boxwood St','YSW 9T2','Whitehorse','Yukon','CA');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2000,'40-5-12 Laogianggen','190518','Beijing',null,'CN');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2100,'1298 Vileparle (E)','490231','Bombay','Maharashtra','IN');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2200,'12-98 Victoria Street','2901','Sydney','New South Wales','AU');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2300,'198 Clementi North','540198','Singapore',null,'SG');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2400,'8204 Arthur St',null,'London',null,'UK');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2500,'Magdalen Centre, The Oxford Science Park','OX9 9ZB','Oxford','Oxford','UK');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2600,'9702 Chester Road','09629850293','Stretford','Manchester','UK');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2700,'Schwanthalerstr. 7031','80925','Munich','Bavaria','DE');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2800,'Rua Frei Caneca 1360 ','01307-002','Sao Paulo','Sao Paulo','BR');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (2900,'20 Rue des Corps-Saints','1730','Geneva','Geneve','CH');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (3000,'Murtenstrasse 921','3095','Bern','BE','CH');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (3100,'Pieter Breughelstraat 837','3029SK','Utrecht','Utrecht','NL');
+Insert into localizacoes (id_localizacao, endereco, cep, cidade, uf, id_pais) values (3200,'Mariano Escobedo 9991','11932','Mexico City','Distrito Federal,','MX');
 
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1000,'1297 Via Cola di Rie','00989','Roma',null,'IT');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1100,'93091 Calle della Testa','10934','Venice',null,'IT');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1200,'2017 Shinjuku-ku','1689','Tokyo','Tokyo Prefecture','JP');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1300,'9450 Kamiya-cho','6823','Hiroshima',null,'JP');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1400,'2014 Jabberwocky Rd','26192','Southlake','Texas','US');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1500,'2011 Interiors Blvd','99236','South San Francisco','California','US');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1600,'2007 Zagora St','50090','South Brunswick','New Jersey','US');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1700,'2004 Charade Rd','98199','Seattle','Washington','US');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1800,'147 Spadina Ave','M5V 2L7','Toronto','Ontario','CA');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (1900,'6092 Boxwood St','YSW 9T2','Whitehorse','Yukon','CA');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2000,'40-5-12 Laogianggen','190518','Beijing',null,'CN');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2100,'1298 Vileparle (E)','490231','Bombay','Maharashtra','IN');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2200,'12-98 Victoria Street','2901','Sydney','New South Wales','AU');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2300,'198 Clementi North','540198','Singapore',null,'SG');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2400,'8204 Arthur St',null,'London',null,'UK');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2500,'Magdalen Centre, The Oxford Science Park','OX9 9ZB','Oxford','Oxford','UK');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2600,'9702 Chester Road','09629850293','Stretford','Manchester','UK');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2700,'Schwanthalerstr. 7031','80925','Munich','Bavaria','DE');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2800,'Rua Frei Caneca 1360 ','01307-002','Sao Paulo','Sao Paulo','BR');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (2900,'20 Rue des Corps-Saints','1730','Geneva','Geneve','CH');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (3000,'Murtenstrasse 921','3095','Bern','BE','CH');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (3100,'Pieter Breughelstraat 837','3029SK','Utrecht','Utrecht','NL');
-Insert into localizacoes (id_localizacao. endereco, cep, cidade, uf, id_pais) values (3200,'Mariano Escobedo 9991','11932','Mexico City','Distrito Federal,','MX');
-
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (10,'Administration',200,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (20,'Marketing',201,1800);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (30,'Purchasing',114,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (40,'Human Resources',203,2400);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (50,'Shipping',121,1500);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (60,'IT',103,1400);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (70,'Public Relations',204,2700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (80,'Sales',145,2500);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (90,'Executive',100,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (100,'Finance',108,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (110,'Accounting',205,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (120,'Treasury',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (130,'Corporate Tax',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (140,'Control And Credit',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (150,'Shareholder Services',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (160,'Benefits',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (170,'Manufacturing',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (180,'Construction',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (190,'Contracting',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (200,'Operations',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (210,'IT Support',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (220,'NOC',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (230,'IT Helpdesk',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (240,'Government Sales',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (250,'Retail Sales',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (260,'Recruiting',null,1700);
-Insert into departamentos (id_departamento, nome, id_localizacao, id_gerente) values (270,'Payroll',null,1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (10,'Administration',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (20,'Marketing',1800);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (30,'Purchasing',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (40,'Human Resources',2400);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (50,'Shipping',1500);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (60,'IT',1400);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (70,'Public Relations',2700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (80,'Sales',2500);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (90,'Executive',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (100,'Finance',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (110,'Accounting',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (120,'Treasury',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (130,'Corporate Tax',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (140,'Control And Credit',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (150,'Shareholder Services',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (160,'Benefits',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (170,'Manufacturing',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (180,'Construction',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (190,'Contracting',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (200,'Operations',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (210,'IT Support',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (220,'NOC',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (230,'IT Helpdesk',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (240,'Government Sales',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (250,'Retail Sales',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (260,'Recruiting',1700);
+Insert into departamentos (id_departamento, nome, id_localizacao) values (270,'Payroll',1700);
 
 Insert into cargos (id_cargo, cargo, salario_minimo, salario_maximo) values ('AD_PRES','President',20080,40000);
 Insert into cargos (id_cargo, cargo, salario_minimo, salario_maximo) values ('AD_VP','Administration Vice President',15000,30000);
@@ -733,38 +731,45 @@ telefone, data_contratacao, id_cargo, salario,
 comissao, id_supervisor, id_departamento) VALUES
 (206, 'William Gietz', 'WGIETZ', '515.123.8181', '2002-06-07', 'AC_ACCOUNT', 8300, null, 205, 110);
 
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 102, 'IT_PROG', '2001-01-13','2006-07-24', 60
 );
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 101, 'AC_ACCOUNT', '1997-09-21','2001-10-27', 110
 );
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 101, 'AC_MGR', '2001-10-28','2005-03-15', 110
 );
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 201, 'MK_REP', '2004-02-17','2007-12-19', 20
 );
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 114, 'ST_CLERK', '2006-03-24','2007-12-31', 50
 );
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 122, 'ST_CLERK', '2007-01-01','2007-12-31', 50
 );
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 200, 'AD_ASST', '1995-09-17','2001-06-17', 90
 );
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 176, 'SA_REP', '2006-03-24','2006-12-31', 80
 );
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 176, 'SA_MAN', '2007-01-01','2007-12-31', 80
 );
-insert into historico_cargos (id_empregado, data_inicial, data_final, id_cargo, id_departamento) values
+insert into historico_cargos (id_empregado, id_cargo, data_inicial, data_final, id_departamento) values
 ( 200, 'AC_ACCOUNT', '2002-07-01','2006-12-31', 90
 );
 
-
-
-
-
+Update departamentos set id_gerente = 200 where id_departamento = 10;
+Update departamentos set id_gerente = 201 where id_departamento = 20;
+Update departamentos set id_gerente = 114 where id_departamento = 30;
+Update departamentos set id_gerente = 203 where id_departamento = 40;
+Update departamentos set id_gerente = 121 where id_departamento = 50;
+Update departamentos set id_gerente = 103 where id_departamento = 60;
+Update departamentos set id_gerente = 204 where id_departamento = 70;
+Update departamentos set id_gerente = 145 where id_departamento = 80;
+Update departamentos set id_gerente = 100 where id_departamento = 90;
+Update departamentos set id_gerente = 108 where id_departamento = 100;
+Update departamentos set id_gerente = 205 where id_departamento = 110;
