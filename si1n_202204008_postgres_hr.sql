@@ -36,10 +36,10 @@ create schema hr;
 show search_path;
 
 ------------------------------------------------------------
-/* Aqui será confugirado o SEARCH PATH do usuário postgres
- * para que os objetos do projeto lógico sejam
- * criados no  schema HR 
------------------------------------------------------------*/
+/* Aqui será confugirado o SEARCH PATH do usuário postgres /
+ * para que os objetos do projeto lógico sejam             /
+ * criados no  schema HR                                   /
+----------------------------------------------------------*/
 
 set search_path to uvv, "$user", public;
 
@@ -51,9 +51,9 @@ set search_path to uvv, "$user", public;
 
 
 ----------------------- REGIÕES ----------------------------
-/*Aqui será cria criada a tabela regioes
- * com o campo "id_região", que será uma Primary Key
- * e o campo "nome", que será uma alternative key*/
+/*Aqui será cria criada a tabela regioes                   *
+ * com o campo "id_região", que será uma Primary Key       *
+ * e o campo "nome", que será uma alternative key          */ 
 CREATE TABLE hr.regioes (
 	id_regiao int NOT null primary key,
 	nome varchar(25) NOT null unique
@@ -64,10 +64,10 @@ COMMENT ON COLUMN hr.regioes.nome IS 'nome é uma AK';
 
 
 ------------------------- PAÍSES ----------------------------
-/*Criação da tabela com as informações dos paises com
- * o campo "id_pais", que será uma primary key,
- * o campo "nome", que será uma alternative key
- * e o campo "id_regiao", que será uma foreign key*/
+/*Criação da tabela com as informações dos paises com       *
+ * o campo "id_pais", que será uma primary key,             *
+ * o campo "nome", que será uma alternative key             *
+ * e o campo "id_regiao", que será uma foreign key          */
 CREATE TABLE hr.paises (
 	id_pais char(2) NOT null primary key,
 	nome varchar(50) NOT null unique,
@@ -139,10 +139,10 @@ COMMENT ON COLUMN hr.empregados.email IS 'email será uma AK na tabela';
 
 
 
---------------------- CARGOS- ------------------------
-/* criação da tabela com as informações dos cargos
- * com os campos: id_cargo (pK), cargo (AK),
- * salario_minimo e salario_maximo
+--------------------- CARGOS- -------------------------
+/* criação da tabela com as informações dos cargos    *
+ * com os campos: id_cargo (pK), cargo (AK),          *
+ * salario_minimo e salario_maximo                    *
 ------------------------------------------------------*/
 create table hr.cargos (
 	id_cargo varchar(10) not null primary key,
@@ -155,12 +155,12 @@ COMMENT ON COLUMN hr.cargos.id_cargo IS 'id_cargo será a PK da tabela';
 COMMENT ON COLUMN hr.cargos.cargo IS 'email será uma AK na tabela';
 
 
-------------------HISTORICO_CARGOS----------------------
-/* criação da tabela com as informações dos históricos
- * dos cargos, com os campos: id_empregado (PFK), 
- * data_incial, data_final, id_cargo (FK), id_departamento(FK)
- foram adiconadas constraints CHECK nas datas.
-------------------------------------------------------*/
+------------------HISTORICO_CARGOS-------------------------------
+/* criação da tabela com as informações dos históricos          *
+ * dos cargos, com os campos: id_empregado (PFK),               *     
+ * data_incial, data_final, id_cargo (FK), id_departamento(FK)  *
+ foram adiconadas constraints CHECK nas datas.                  *
+----------------------------------------------------------------*/
 create table hr.historico_cargos (
 	id_empregado int not null, 
 	data_inicial date not null,
