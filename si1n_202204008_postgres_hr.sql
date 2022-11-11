@@ -1,10 +1,9 @@
-/*Esse começo do script POSTGRES promove uma limpeza no banco de dados, 
- * faz uma remoção, caso existam, do BD "uvv" e do usuário
- *"michela", para então criar o usuário "michela" e o 
- *Banco de Dados "UVV"*/
-
-
+/*Esse começo do script POSTGRES promove uma limpeza    *
+ * no banco de dados, faz uma remoção, caso existam,    *
+ * do BD "uvv" e do usuário *"michela", para então      *
+ * criar o usuário "michela" e o *Banco de Dados "UVV"  */
 ---------------------------------------------------------
+
 --deletando o banco de dados UVV
 drop database if exists uvv;
 

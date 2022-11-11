@@ -115,7 +115,7 @@ create table empregados (
 /* criação da tabela com as informações dos históricos
  * dos cargos, com os campos: id_empregado (PFK), 
  * data_incial, data_final, id_cargo (FK), id_departamento(FK)
------------------------------------------------------------*/
+-- ---------------------------------------------------------*/
 create table historico_cargos (
 	id_empregado int not null, 
 	data_inicial date not null,
@@ -124,12 +124,20 @@ create table historico_cargos (
 	id_departamento int,
 	primary key (id_empregado, data_inicial)
 );
+-- adicionando regras de integridade na tabela historico_cargos
+alter table hr.historico_cargos
+add constraint data_inicial check (data_inicial<data_final);
+
+alter table hr.historico_cargos
+add constraint data_final check (data_final > data_inicial);
+
 
 -- ------------------------------------------------------------------
 -- -                                                               -- 
 -- -                 RELACIONANDO AS TABELAS                       --
 -- -                                                               --
 -- ------------------------------------------------------------------
+
 
 -- Relacionando a tabela "paises" com a tabela "regiões" 
 alter table paises 
@@ -206,6 +214,7 @@ alter table historico_cargos
 -- -                    POPULANDO AS TABELAS                       --
 -- -                                                               --
 -- ------------------------------------------------------------------
+
 INSERT INTO regioes (id_regiao, nome) VALUES (1,'Europe');
 INSERT INTO regioes (id_regiao, nome) VALUES (2,'Americas');
 INSERT INTO regioes (id_regiao, nome) VALUES (3,'Asia');
