@@ -40,6 +40,7 @@ show search_path;
  * para que os objetos do projeto lógico sejam
  * criados no  schema HR 
 -----------------------------------------------------------*/
+
 set search_path to uvv, "$user", public;
 
 /*----------------------------------------------------------
