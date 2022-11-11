@@ -2,6 +2,7 @@
  * faz uma remoção, caso existam, do BD "uvv" e do usuário             *
  *"michela", para então criar o usuário "Postgres" e o                 *     
  *Banco de Dados "UVV"                                                 */
+-- ---------------------------------------------------------------------
 
 -- deletando o banco de dados UVV
 drop database if exists uvv; 
@@ -124,6 +125,12 @@ create table historico_cargos (
 	primary key (id_empregado, data_inicial)
 );
 
+-- ------------------------------------------------------------------
+-- -                                                               -- 
+-- -                 RELACIONANDO AS TABELAS                       --
+-- -                                                               --
+-- ------------------------------------------------------------------
+
 -- Relacionando a tabela "paises" com a tabela "regiões" 
 alter table paises 
 	add constraint fk_regiao
@@ -138,7 +145,7 @@ alter table localizacoes
 	references paises (id_pais)
 ;
 
--- Relacionando a tabela "departamentos" com a tabela "empregados"
+-- Relacionando a tabela "departamentos", campo "id_gerente" com a tabela "empregados", campo "id_empregado"
 alter table departamentos   
 	add constraint fk_gerente
 	foreign key (id_gerente)
@@ -152,7 +159,7 @@ alter table departamentos
 	references localizacoes (id_localizacao)
 ;
 
--- Aplicando a foreign key da tabela empregados" 
+-- Relacionando a tabela "empregados" com a tabela "departamentos" 
 alter table empregados  
 	add constraint fk_departamento
 	foreign key (id_departamento)
